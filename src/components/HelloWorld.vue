@@ -25,7 +25,6 @@ export default {
     return {
       msg: "Welcome to Tweet Encryptor",
       tweet:'',
-      preMessage:'https://twitter.com/intent/tweet?text=',
       composedMessage:'',
       hash:'',
       algos:['MD5','RIPEMD160','SHA1','SHA224','SHA256','SHA384','SHA512'],
@@ -36,17 +35,35 @@ export default {
     tweetChange(){
       if(this.tweet!==''){
         this.computeHash()
-        this.composedMessage=this.preMessage+this.hash
+        this.composeTweet()
       } 
-      else this.hash
+      else this.hash=''
     },
     computeHash(){
       const secret = '';
       this.hash = crypto.createHash(this.algo, secret)
                  .update(this.tweet)
                  .digest('hex');
+    },
+    composeTweet(){
+    const link='https://twitter.com/intent/tweet?'
+    
+    const tweetData ={
+      'text':this.hash,
+      'hashtags':[this.algo,'encryptedTweet']
+    }
+    this.composedMessage=link+this.encodeQueryData(tweetData)
+    
+
+    },
+    encodeQueryData(data) {
+     const ret = [];
+     for (let d in data)
+       ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(data[d]));
+     return ret.join('&');
     }
   },
+
   watch: {
     algo: function (newAlgo){
       this.algo=newAlgo
