@@ -2,7 +2,7 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <div class="messagebox">
-      <b-form-textarea textarea v-model="tweet" v-on:input="tweetChange()" placeholder="Enter Message to be encrypted" :rows="2"></b-form-textarea >
+      <b-form-textarea textarea v-model="tweet" v-on:input="tweetChange()" placeholder="Enter message to be encrypted" :rows="2"></b-form-textarea >
     </div>
     <div class="algo">
       <b-form-select v-model="algo" v-on:input="tweetChange()" class="mb-3" size="sm">
@@ -15,7 +15,7 @@
       <div class="hash">Hash: <pre>{{hash}}</pre></div>
     </div>
     <div class="user">
-      <div>
+      <div class="messageCheck">
         <b-form-checkbox  v-model="sendCopy">Send me a copy of the message</b-form-checkbox>
         
         <div  v-if="sendCopy">
@@ -28,12 +28,13 @@
             Send
           </b-button>
 
-          <span v-if="sent">Mail sent ✓</span>
+          <span v-if="sent">    Mail sent ✓</span>
         </div>
         
       </div>
-
-      <b-button id="tweet" variant="primary" v-on:click="sendTweet()">Tweet it !</b-button>
+      <span class="tweet">
+        <b-button  variant="primary" v-on:click="sendTweet()">Tweet it !</b-button>
+      </span>
       
 
     </div>
@@ -49,7 +50,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 export default {
   data() {
     return {
-      msg: "Tweet Encryptor",
+      msg: "Tweet Encryptor 🔒",
       tweet:'',
       composedMessage:'',
       sendCopy:false,
@@ -131,6 +132,10 @@ export default {
 h3 {
   margin: 20px 0 0;
 }
+h1 {
+
+  font-size: 33px;
+}
 ul {
   list-style-type: none;
   padding: 0;
@@ -144,11 +149,14 @@ li {
   margin-bottom: 20px;
 }
 
+.tweet {
+  margin-top: 20px;
+}
 #email {
   max-width: 270px;
   display: inline;
   margin-right: 15px;
-  margin-bottom: 15px;
+  
 }
 .algo {
   max-width: 350px;
@@ -156,7 +164,9 @@ li {
 .hello {
   margin: 10px;
 }
-
+.messageCheck {
+  margin-bottom: 15px;
+}
 .hash pre {
   display: inline;
 }
