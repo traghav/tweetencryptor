@@ -27,4 +27,8 @@ export default {
 a {
   color: #38C7BD;
 }
+body {
+   background-color: #f2fffe;
+
+}
 </style>

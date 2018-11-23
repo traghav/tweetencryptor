@@ -35,7 +35,11 @@
       <span class="tweet">
         <b-button  variant="primary" v-on:click="sendTweet()">Tweet it !</b-button>
       </span>
-      
+
+    </div>
+    <div class="footer">
+      By <a href="https://raghav.cc">raghav.cc</a>
+
 
     </div>
         
@@ -162,12 +166,21 @@ li {
   max-width: 350px;
 }
 .hello {
-  margin: 10px;
+  margin: 20px;
 }
 .messageCheck {
   margin-bottom: 15px;
 }
 .hash pre {
   display: inline;
+}
+.footer {
+  font-size: 16px;
+  position: absolute;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  bottom: 0;
+  right: 0;
+  color: #38C7BD;
 }
 </style>
