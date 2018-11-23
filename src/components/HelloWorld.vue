@@ -2,7 +2,7 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <div class="messagebox">
-      <textarea v-model="tweet" v-on:input="tweetChange()"></textarea>
+      <textarea v-model="tweet" v-on:input="tweetChange()" placeholder="Enter Message to be encrypted"></textarea>
     </div>
     <select v-model="algo" v-on:input="tweetChange()">
       <option v-for="algo in algos" v-bind:value="algo">
@@ -14,18 +14,33 @@
       <div>Hash: {{hash}}</div>
       <div>Algorithm: {{algo}}</div>
     </div>
-    <a :href="composedMessage">Tweet it!</a>
+    <div class="user">
+      <div>
+        <input type="checkbox" id="sendMail" v-model="sendCopy">
+        <label for="sendMail">Send me a copy of the message</label>
+        <span v-if="sendCopy">
+          <input v-model="email" placeholder="Enter email">
+        </span>
+        
+      </div>
+      <button v-on:click="sendTweet()">Tweet it!</button>
+
+    </div>
+        
   </div>
 </template>
 
 <script>
 import crypto from 'crypto';
+import axios from 'axios'
 export default {
   data() {
     return {
       msg: "Welcome to Tweet Encryptor",
       tweet:'',
       composedMessage:'',
+      sendCopy:false,
+      email:'',
       hash:'',
       algos:['MD5','RIPEMD160','SHA1','SHA224','SHA256','SHA384','SHA512'],
       algo:'SHA256'
@@ -56,6 +71,22 @@ export default {
     
 
     },
+    sendTweet() {
+
+    if(true) {
+      var lnk='http://curlmail.co/'+this.email+'?'
+      const emailData ={
+      'subject':'Tweet Encyptor',
+      'content':'You sent an encrypted tweet with the message \n'+this.tweet+' \n which was encrypted using '+ this.algo+' to \n'+this.hash
+      }
+      lnk=lnk+this.encodeQueryData(emailData)
+      console.log(lnk)
+      
+      axios.get(lnk)
+      
+    }
+    
+    },
     encodeQueryData(data) {
      const ret = [];
      for (let d in data)
@@ -68,6 +99,7 @@ export default {
     algo: function (newAlgo){
       this.algo=newAlgo
       this.computeHash()
+      this.composeTweet()
     }
   }
 
@@ -87,7 +119,5 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
-a {
-  color: #42b983;
-}
+
 </style>
